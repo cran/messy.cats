@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Messy.Cats Introduction</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Messy.Cats Introduction</h1>
+
+
+
+<p><code>messy.cats</code> contains various functions that employ string
+distance tools in order to make data management easier for users working
+with categorical data. Categorical data, especially user inputted
+categorical data that often tends to be plagued by typos and different
+formatting choices, can be difficult to work with.
+<code>messy.cats</code> aims to provide functions that make cleaning
+categorical data simple and easy.</p>
+<p>This introduction will lead you through examples of the functions in
+use, explain the arguments, and show how to get the most out of these
+functions.</p>
+<p>First lets create some example vectors:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cars_bad <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;teal Mazda RX4&quot;</span>, <span class="st">&quot;black Mazda RX4 Wag&quot;</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;green Datsun 710&quot;</span>, <span class="st">&quot;Hornet 4 Drive&quot;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;green Hornet Sportabout&quot;</span>, <span class="st">&quot;Valiant&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Duster 360&quot;</span>, <span class="st">&quot;orange Merc 240D&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Merc 230&quot;</span>, <span class="st">&quot;teal Merc 280&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Merc 280C&quot;</span>, <span class="st">&quot;green Merc 450SE&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Merc 450SL&quot;</span>, <span class="st">&quot;blue Merc 450SLC&quot;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;green Cadillac Fleetwood&quot;</span>, <span class="st">&quot;Lincoln Continental&quot;</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Chrysler Imperial&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cars_good <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Mazda RX4&quot;</span>, <span class="st">&quot;Mazda RX4 Wag&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;Datsun 710&quot;</span>, <span class="st">&quot;Hornet 4 Drive&quot;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Hornet Sportabout&quot;</span>, <span class="st">&quot;Valiant&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Duster 360&quot;</span>, <span class="st">&quot;Merc 240D&quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Merc 230&quot;</span>, <span class="st">&quot;Merc 280&quot;</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Merc 280C&quot;</span>, <span class="st">&quot;Merc 450SE&quot;</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Merc 450SL&quot;</span>, <span class="st">&quot;Merc 450SLC&quot;</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Cadillac Fleetwood&quot;</span>, <span class="st">&quot;Lincoln Continental&quot;</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Chrysler Imperial&quot;</span>)</span></code></pre></div>
+<p>Suppose you have two lists of cars descriptions, one containing
+information on the make of the car, and the other containing make and
+color. Instead of string processing and deleting the color descriptors,
+which can be a fincky and time consuming process, cat_match() can match
+the contents of the two lists.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_match</span>(cars_bad, cars_good, <span class="at">method =</span> <span class="st">&quot;jw&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                         bad               match  dists</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            teal Mazda RX4           Mazda RX4 0.2302</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       black Mazda RX4 Wag       Mazda RX4 Wag 0.2591</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3          green Datsun 710          Datsun 710 0.2417</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4            Hornet 4 Drive      Hornet 4 Drive 0.0000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   green Hornet Sportabout   Hornet Sportabout 0.1948</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                   Valiant             Valiant 0.0000</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                Duster 360          Duster 360 0.0000</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8          orange Merc 240D           Merc 240D 0.2199</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9                  Merc 230            Merc 230 0.0000</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10            teal Merc 280            Merc 280 0.2324</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                Merc 280C           Merc 280C 0.0000</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12         green Merc 450SE          Merc 450SL 0.2532</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13               Merc 450SL          Merc 450SL 0.0000</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14         blue Merc 450SLC         Merc 450SLC 0.1799</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 green Cadillac Fleetwood  Cadillac Fleetwood 0.2037</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16      Lincoln Continental Lincoln Continental 0.0000</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17        Chrysler Imperial   Chrysler Imperial 0.0000</span></span></code></pre></div>
+<p>After making sure that the string distance calculation is not making
+error with cat_match(), a user can use cat_replace to swap the contents
+of one list for their closest match in another.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_replace</span>(cars_bad, cars_good, <span class="at">method =</span> <span class="st">&quot;jw&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;Mazda RX4&quot;           &quot;Mazda RX4 Wag&quot;       &quot;Datsun 710&quot;         </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;Hornet 4 Drive&quot;      &quot;Hornet Sportabout&quot;   &quot;Valiant&quot;            </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;Duster 360&quot;          &quot;Merc 240D&quot;           &quot;Merc 230&quot;           </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] &quot;Merc 280&quot;            &quot;Merc 280C&quot;           &quot;Merc 450SL&quot;         </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Merc 450SL&quot;          &quot;Merc 450SLC&quot;         &quot;Cadillac Fleetwood&quot; </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] &quot;Lincoln Continental&quot; &quot;Chrysler Imperial&quot;</span></span></code></pre></div>
+<p>Alternatively, a user could join together two dataframes that use
+these lists as id variables with the function cat_join().</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bad_cars_df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">car =</span> cars_bad, <span class="at">state_registration =</span> <span class="st">&quot;CA&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>good_cars_df<span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">car =</span> cars_good, <span class="at">insur_comp =</span> <span class="st">&quot;All State&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bad_cars_df)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       car state_registration</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1          teal Mazda RX4                 CA</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     black Mazda RX4 Wag                 CA</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        green Datsun 710                 CA</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4          Hornet 4 Drive                 CA</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 green Hornet Sportabout                 CA</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                 Valiant                 CA</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(good_cars_df)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 car insur_comp</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1         Mazda RX4  All State</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     Mazda RX4 Wag  All State</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        Datsun 710  All State</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    Hornet 4 Drive  All State</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Hornet Sportabout  All State</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6           Valiant  All State</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_join</span>(bad_cars_df, good_cars_df, <span class="at">by=</span><span class="st">&quot;car&quot;</span>, <span class="at">method=</span><span class="st">&quot;jw&quot;</span>, <span class="at">join=</span><span class="st">&quot;left&quot;</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    car state_registration insur_comp</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            Mazda RX4                 CA  All State</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        Mazda RX4 Wag                 CA  All State</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3           Datsun 710                 CA  All State</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       Hornet 4 Drive                 CA  All State</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Hornet Sportabout                 CA  All State</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6              Valiant                 CA  All State</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7           Duster 360                 CA  All State</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8            Merc 240D                 CA  All State</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9             Merc 230                 CA  All State</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10            Merc 280                 CA  All State</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11           Merc 280C                 CA  All State</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12          Merc 450SL                 CA  All State</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13          Merc 450SL                 CA  All State</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14         Merc 450SLC                 CA  All State</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15  Cadillac Fleetwood                 CA  All State</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 Lincoln Continental                 CA  All State</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17   Chrysler Imperial                 CA  All State</span></span></code></pre></div>
+<p>These are some of the most basic uses of the core functions in the
+messy.cats package. Each function mentioned has a plethora of additional
+arguments that users can utilize in order to fine tune their string
+distance calculations or increase the ease with which they use the
+functions.</p>
+<p>What happens when the lists are not the same length, or the matches
+aren’t perfect?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>messy_short <span class="ot">&lt;-</span>         <span class="fu">c</span>(<span class="st">&quot;Fiat 128&quot;</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;red Honda Civic&quot;</span>, <span class="st">&quot;Toyota Corolla&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Toyota Corona&quot;</span>, <span class="st">&quot;Dodge Challenger&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;red AMC Javelin&quot;</span>, <span class="st">&quot;Camaro Z28&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Pontiac Firebird&quot;</span>, <span class="st">&quot;black Fiat X1-9&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;blue Porsche 914-2&quot;</span>, <span class="st">&quot;Lotus Europa&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Ford Pantera L&quot;</span>, <span class="st">&quot;black Ferrari Dino&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;black Maserati Bora&quot;</span>, <span class="st">&quot;black Volvo 142E&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>clean_short <span class="ot">&lt;-</span>       <span class="fu">c</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Honda Civic&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Toyota Corona&quot;</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;AMC Javelin&quot;</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Pontiac Firebird&quot;</span>, <span class="st">&quot;Fiat X1-9&quot;</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Porsche 914-2&quot;</span>, <span class="st">&quot;Lotus Europa&quot;</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Ford Pantera L&quot;</span>, <span class="st">&quot;Ferrari Dino&quot;</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;Maserati Bora&quot;</span>, <span class="st">&quot;Volvo 142E&quot;</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_match</span>(messy_short,clean_short, <span class="at">method =</span> <span class="st">&quot;jaccard&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(dists))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    bad            match  dists</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1           Camaro Z28    Toyota Corona 0.5833</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2             Fiat 128        Fiat X1-9 0.4545</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     Dodge Challenger   Ford Pantera L 0.4286</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     black Volvo 142E       Volvo 142E 0.3333</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      black Fiat X1-9        Fiat X1-9 0.3077</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   black Ferrari Dino Pontiac Firebird 0.2667</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  black Maserati Bora    Maserati Bora 0.2308</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8       Toyota Corolla    Toyota Corona 0.2222</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9   blue Porsche 914-2    Porsche 914-2 0.1875</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     red Honda Civic      Honda Civic 0.1818</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11     red AMC Javelin      AMC Javelin 0.1667</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12       Toyota Corona    Toyota Corona 0.0000</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13    Pontiac Firebird Pontiac Firebird 0.0000</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14        Lotus Europa     Lotus Europa 0.0000</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15      Ford Pantera L   Ford Pantera L 0.0000</span></span></code></pre></div>
+<p>You can see that some of these matches are wrong, you can use the
+<code>return_lists</code> argument to return a list of the top matches.
+We suggest setting this to 2 or 3, if the top 3 are not still not
+correct, there may not be a clean match, or you may need to try a
+different string distance method (see <code>select_metric()</code>.</p>
+<p>When combined with a threshold, <code>cat_match</code> will only
+return a list for values that have a best match above that
+threshold.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_match</span>(messy_short,clean_short, <span class="at">method =</span> <span class="st">&quot;jaccard&quot;</span>, <span class="at">return_lists =</span> <span class="dv">3</span>, <span class="at">threshold =</span> <span class="fl">0.2</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(dists)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>()</span></code></pre></div>
+<div id="bavmztwcdb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+#bavmztwcdb .gt_table {
+display: table;
+border-collapse: collapse;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#bavmztwcdb .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#bavmztwcdb .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#bavmztwcdb .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 0;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#bavmztwcdb .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#bavmztwcdb .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#bavmztwcdb .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#bavmztwcdb .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#bavmztwcdb .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#bavmztwcdb .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#bavmztwcdb .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#bavmztwcdb .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+}
+#bavmztwcdb .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#bavmztwcdb .gt_from_md > :first-child {
+margin-top: 0;
+}
+#bavmztwcdb .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#bavmztwcdb .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#bavmztwcdb .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#bavmztwcdb .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#bavmztwcdb .gt_row_group_first td {
+border-top-width: 2px;
+}
+#bavmztwcdb .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#bavmztwcdb .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#bavmztwcdb .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#bavmztwcdb .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#bavmztwcdb .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#bavmztwcdb .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#bavmztwcdb .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#bavmztwcdb .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#bavmztwcdb .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#bavmztwcdb .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-left: 4px;
+padding-right: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#bavmztwcdb .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#bavmztwcdb .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#bavmztwcdb .gt_left {
+text-align: left;
+}
+#bavmztwcdb .gt_center {
+text-align: center;
+}
+#bavmztwcdb .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#bavmztwcdb .gt_font_normal {
+font-weight: normal;
+}
+#bavmztwcdb .gt_font_bold {
+font-weight: bold;
+}
+#bavmztwcdb .gt_font_italic {
+font-style: italic;
+}
+#bavmztwcdb .gt_super {
+font-size: 65%;
+}
+#bavmztwcdb .gt_footnote_marks {
+font-style: italic;
+font-weight: normal;
+font-size: 75%;
+vertical-align: 0.4em;
+}
+#bavmztwcdb .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#bavmztwcdb .gt_slash_mark {
+font-size: 0.7em;
+line-height: 0.7em;
+vertical-align: 0.15em;
+}
+#bavmztwcdb .gt_fraction_numerator {
+font-size: 0.6em;
+line-height: 0.6em;
+vertical-align: 0.45em;
+}
+#bavmztwcdb .gt_fraction_denominator {
+font-size: 0.6em;
+line-height: 0.6em;
+vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">bad</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">match</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">dists</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">black Volvo 142E</td>
+<td class="gt_row gt_center">Volvo 142E, Porsche 914-2, AMC Javelin</td>
+<td class="gt_row gt_center">0.3333, 0.6111, 0.6250</td></tr>
+    <tr><td class="gt_row gt_left">black Maserati Bora</td>
+<td class="gt_row gt_center">Maserati Bora, Lotus Europa, Pontiac Firebird</td>
+<td class="gt_row gt_center">0.2308, 0.4667, 0.4706</td></tr>
+    <tr><td class="gt_row gt_left">black Ferrari Dino</td>
+<td class="gt_row gt_center">Pontiac Firebird, Ferrari Dino, Ford Pantera L</td>
+<td class="gt_row gt_center">0.2667, 0.3077, 0.4000</td></tr>
+    <tr><td class="gt_row gt_left">blue Porsche 914-2</td>
+<td class="gt_row gt_center">Porsche 914-2</td>
+<td class="gt_row gt_center">0.1875</td></tr>
+    <tr><td class="gt_row gt_left">black Fiat X1-9</td>
+<td class="gt_row gt_center">Fiat X1-9, Pontiac Firebird, AMC Javelin</td>
+<td class="gt_row gt_center">0.3077, 0.6316, 0.7222</td></tr>
+    <tr><td class="gt_row gt_left">Camaro Z28</td>
+<td class="gt_row gt_center">Toyota Corona, Maserati Bora, Pontiac Firebird</td>
+<td class="gt_row gt_center">0.5833, 0.6429, 0.7059</td></tr>
+    <tr><td class="gt_row gt_left">red AMC Javelin</td>
+<td class="gt_row gt_center">AMC Javelin</td>
+<td class="gt_row gt_center">0.1667</td></tr>
+    <tr><td class="gt_row gt_left">Dodge Challenger</td>
+<td class="gt_row gt_center">Ford Pantera L, Honda Civic, Ferrari Dino</td>
+<td class="gt_row gt_center">0.4286, 0.4615, 0.4615</td></tr>
+    <tr><td class="gt_row gt_left">Toyota Corona</td>
+<td class="gt_row gt_center">Toyota Corona</td>
+<td class="gt_row gt_center">0</td></tr>
+    <tr><td class="gt_row gt_left">Pontiac Firebird</td>
+<td class="gt_row gt_center">Pontiac Firebird</td>
+<td class="gt_row gt_center">0</td></tr>
+    <tr><td class="gt_row gt_left">Lotus Europa</td>
+<td class="gt_row gt_center">Lotus Europa</td>
+<td class="gt_row gt_center">0</td></tr>
+    <tr><td class="gt_row gt_left">Ford Pantera L</td>
+<td class="gt_row gt_center">Ford Pantera L</td>
+<td class="gt_row gt_center">0</td></tr>
+    <tr><td class="gt_row gt_left">Toyota Corolla</td>
+<td class="gt_row gt_center">Toyota Corona, Lotus Europa, Ford Pantera L</td>
+<td class="gt_row gt_center">0.2222, 0.5000, 0.5385</td></tr>
+    <tr><td class="gt_row gt_left">red Honda Civic</td>
+<td class="gt_row gt_center">Honda Civic</td>
+<td class="gt_row gt_center">0.1818</td></tr>
+    <tr><td class="gt_row gt_left">Fiat 128</td>
+<td class="gt_row gt_center">Fiat X1-9, Pontiac Firebird, Ferrari Dino</td>
+<td class="gt_row gt_center">0.4545, 0.6875, 0.6923</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>Some of our matches have good choices, but others seem to be lacking
+a match in the clean vector. You can output this dataframe and manually
+choose the correct match or that there is no suitable match, or you can
+use the <code>pick_lists</code> argument, which prompts you in the
+console to choose the correct option or none of the above.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data(&quot;picked_list&quot;)</span></span></code></pre></div>
+<p>In this more extensive example we have two datasets of biological
+data. The first: <code>messy_caterpillars</code> contains information
+about the average weight and length of caterpillars, and as the name
+suggests, has messy very caterpillar
+names.<code>clean_caterpillars</code> is a dataset containing the
+species and the number of caterpillars found and clean caterpillar
+names.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load in messy_caterpillars and clean_caterpillars</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;clean_caterpillars&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;messy_caterpillars&quot;</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(messy_caterpillars)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(messy_caterpillars)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clean_caterpillars)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(clean_caterpillars)</span></code></pre></div>
+<p>To fix these names we can either use <code>cat_replace()</code> and
+change the caterpillar name variables and then use a merging function
+such as the dplyr join functions, or use <code>cat_join()</code>.</p>
+<p>But first, in order to properly configure our string distance
+arguments, we will first use <code>cat_match()</code> to explore how the
+messy and clean caterpillar names match up.</p>
+<p>We input the messy and clean vectors—in this case columns of
+caterpillar names—and specify no other arguments other than to return
+the distance between each string pair.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_match</span>(messy_caterpillars<span class="sc">$</span>CaterpillarSpecies,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>          clean_caterpillars<span class="sc">$</span>species,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">return_dists =</span> T)</span></code></pre></div>
+<p>The output shows the clean string with the lowest string distance
+from each messy string, and the distance between the pair is returned as
+a third column.</p>
+<p>If we arrange by the distance in descending order, we can see the
+items of the messy vector with the worst matches. We can observe that
+the worst match is between “Papilio_glaucus” and “Orgyia leucostigma”.
+Additionally, this is the only incorrect match. This means that if we
+set a threshold lower than .5, cat_match will return no incorrect
+matches.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_match</span>(messy_caterpillars<span class="sc">$</span>CaterpillarSpecies,clean_caterpillars<span class="sc">$</span>species,<span class="at">return_dists =</span> T,<span class="at">method=</span><span class="st">&quot;jaccard&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(dists))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>messy_caterpillars<span class="sc">$</span>CaterpillarSpecies <span class="ot">=</span> <span class="fu">cat_replace</span>(messy_caterpillars<span class="sc">$</span>CaterpillarSpecies,clean_caterpillars<span class="sc">$</span>species,<span class="at">method=</span><span class="st">&quot;jaccard&quot;</span>, <span class="at">threshold =</span> .<span class="dv">49</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(clean_caterpillars,messy_caterpillars, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;species&quot;</span><span class="ot">=</span><span class="st">&quot;CaterpillarSpecies&quot;</span>))</span></code></pre></div>
+<p>Alternatively, a user could accomplish this task in one step using
+<code>cat_join()</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;clean_caterpillars&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;messy_caterpillars&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat_join</span>(<span class="at">messy_df =</span> messy_caterpillars, <span class="at">clean_df =</span> clean_caterpillars, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CaterpillarSpecies&quot;</span>, <span class="st">&quot;species&quot;</span>), <span class="at">method=</span><span class="st">&quot;jaccard&quot;</span>, <span class="at">threshold =</span> .<span class="dv">49</span>,<span class="at">join=</span><span class="st">&quot;full&quot;</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 75 × 5</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    species                `Avg Weight (mg)` `Avg Length (cm)` count  year</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                              &lt;dbl&gt;             &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 Achatia distincta                  0.809              2.64    24  2021</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 Achatia distincta                  0.809              2.64    14  2020</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 Achatia distincta                  0.809              2.64    16  2019</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 Alsophila pometaria                2.03               1.73     8  2021</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 Alsophila pometaria                2.03               1.73    18  2020</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 Alsophila pometaria                2.03               1.73    11  2019</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 Amphipyra pyramidoides             0.914              1.76    26  2021</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 Amphipyra pyramidoides             0.914              1.76    26  2020</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 Amphipyra pyramidoides             0.914              1.76     9  2019</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Himella intractata                 1.53               2.54     3  2021</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 65 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mtcars_colnames_messy <span class="ot">=</span> mtcars</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mtcars_colnames_messy)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(mtcars)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="st">&quot;_17&quot;</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mtcars_colnames_messy)[<span class="dv">6</span><span class="sc">:</span><span class="dv">11</span>] <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(mtcars)[<span class="dv">6</span><span class="sc">:</span><span class="dv">11</span>], <span class="st">&quot;_2017&quot;</span>)</span></code></pre></div>
+<p>Another messy dataset problem that our package hopes to help solve is
+row binding two datasets with different columns names.
+<code>fuzzy_rbind()</code> allows a user to join columns in dataframes
+using string distance matching. Any two columns with similar enough
+names will be bound together, and <code>fuzzy_rbind()</code> takes
+similar arguments as the rest of the functions in
+<code>messy.cats</code> to allow the user to fine tune their string
+distance matching.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fuzzy_rbind</span>(<span class="at">df1 =</span> mtcars, <span class="at">df2 =</span> mtcars_colnames_messy, <span class="at">threshold =</span> .<span class="dv">5</span>, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="st">&quot;jw&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7   14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8   24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9   22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12  16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13  17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14  15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16  10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17  14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18  32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19  30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20  33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22  15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23  15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24  13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25  19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26  27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28  30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29  15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30  19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31  15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32  21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33 110.0   6 160.0 110 3.90 2.620 16.46  0  4    4    4</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 34 110.0   6 160.0 110 3.90 2.875 17.02  0  4    4    4</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 35  93.0   4 108.0  93 3.85 2.320 18.61  1  1    1    1</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 110.0   6 258.0 110 3.08 3.215 19.44  1  1    1    1</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 37 175.0   8 360.0 175 3.15 3.440 17.02  0  2    2    2</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 38 105.0   6 225.0 105 2.76 3.460 20.22  1  1    1    1</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 39 245.0   8 360.0 245 3.21 3.570 15.84  0  4    4    4</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 40  62.0   4 146.7  62 3.69 3.190 20.00  1  2    2    2</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 41  95.0   4 140.8  95 3.92 3.150 22.90  1  2    2    2</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 123.0   6 167.6 123 3.92 3.440 18.30  1  4    4    4</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 43 123.0   6 167.6 123 3.92 3.440 18.90  1  4    4    4</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 44 180.0   8 275.8 180 3.07 4.070 17.40  0  3    3    3</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 45 180.0   8 275.8 180 3.07 3.730 17.60  0  3    3    3</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 46 180.0   8 275.8 180 3.07 3.780 18.00  0  3    3    3</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47 205.0   8 472.0 205 2.93 5.250 17.98  0  4    4    4</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 215.0   8 460.0 215 3.00 5.424 17.82  0  4    4    4</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 49 230.0   8 440.0 230 3.23 5.345 17.42  0  4    4    4</span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50  66.0   4  78.7  66 4.08 2.200 19.47  1  1    1    1</span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51  52.0   4  75.7  52 4.93 1.615 18.52  1  2    2    2</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52  65.0   4  71.1  65 4.22 1.835 19.90  1  1    1    1</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53  97.0   4 120.1  97 3.70 2.465 20.01  1  1    1    1</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54 150.0   8 318.0 150 2.76 3.520 16.87  0  2    2    2</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55 150.0   8 304.0 150 3.15 3.435 17.30  0  2    2    2</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56 245.0   8 350.0 245 3.73 3.840 15.41  0  4    4    4</span></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57 175.0   8 400.0 175 3.08 3.845 17.05  0  2    2    2</span></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58  66.0   4  79.0  66 4.08 1.935 18.90  1  1    1    1</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59  91.0   4 120.3  91 4.43 2.140 16.70  0  2    2    2</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60 113.0   4  95.1 113 3.77 1.513 16.90  1  2    2    2</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 61 264.0   8 351.0 264 4.22 3.170 14.50  0  4    4    4</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 62 175.0   6 145.0 175 3.62 2.770 15.50  0  6    6    6</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 63 335.0   8 301.0 335 3.54 3.570 14.60  0  8    8    8</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 64 109.0   4 121.0 109 4.11 2.780 18.60  1  2    2    2</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fuzzy_rbind</span>(<span class="at">df1 =</span> mtcars, <span class="at">df2 =</span> mtcars_colnames_messy, <span class="at">threshold =</span> .<span class="dv">2</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="st">&quot;jw&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     mpg cyl  disp drat  qsec gear carb</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  21.0   6 160.0 3.90 16.46    4    4</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  21.0   6 160.0 3.90 17.02    4    4</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  22.8   4 108.0 3.85 18.61    4    1</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  21.4   6 258.0 3.08 19.44    3    1</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  18.7   8 360.0 3.15 17.02    3    2</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  18.1   6 225.0 2.76 20.22    3    1</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  14.3   8 360.0 3.21 15.84    3    4</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  24.4   4 146.7 3.69 20.00    4    2</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  22.8   4 140.8 3.92 22.90    4    2</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 19.2   6 167.6 3.92 18.30    4    4</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 17.8   6 167.6 3.92 18.90    4    4</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 16.4   8 275.8 3.07 17.40    3    3</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 17.3   8 275.8 3.07 17.60    3    3</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 15.2   8 275.8 3.07 18.00    3    3</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 10.4   8 472.0 2.93 17.98    3    4</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 10.4   8 460.0 3.00 17.82    3    4</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 14.7   8 440.0 3.23 17.42    3    4</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 32.4   4  78.7 4.08 19.47    4    1</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 30.4   4  75.7 4.93 18.52    4    2</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20 33.9   4  71.1 4.22 19.90    4    1</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21 21.5   4 120.1 3.70 20.01    3    1</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 15.5   8 318.0 2.76 16.87    3    2</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23 15.2   8 304.0 3.15 17.30    3    2</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24 13.3   8 350.0 3.73 15.41    3    4</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25 19.2   8 400.0 3.08 17.05    3    2</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26 27.3   4  79.0 4.08 18.90    4    1</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27 26.0   4 120.3 4.43 16.70    5    2</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28 30.4   4  95.1 3.77 16.90    5    2</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29 15.8   8 351.0 4.22 14.50    5    4</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30 19.7   6 145.0 3.62 15.50    5    6</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31 15.0   8 301.0 3.54 14.60    5    8</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32 21.4   4 121.0 4.11 18.60    4    2</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33 21.0   6 160.0 3.90 16.46    4    4</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 34 21.0   6 160.0 3.90 17.02    4    4</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 35 22.8   4 108.0 3.85 18.61    4    1</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 21.4   6 258.0 3.08 19.44    3    1</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 37 18.7   8 360.0 3.15 17.02    3    2</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 38 18.1   6 225.0 2.76 20.22    3    1</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 39 14.3   8 360.0 3.21 15.84    3    4</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 40 24.4   4 146.7 3.69 20.00    4    2</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 41 22.8   4 140.8 3.92 22.90    4    2</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 19.2   6 167.6 3.92 18.30    4    4</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 43 17.8   6 167.6 3.92 18.90    4    4</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 44 16.4   8 275.8 3.07 17.40    3    3</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 45 17.3   8 275.8 3.07 17.60    3    3</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 46 15.2   8 275.8 3.07 18.00    3    3</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47 10.4   8 472.0 2.93 17.98    3    4</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 10.4   8 460.0 3.00 17.82    3    4</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 49 14.7   8 440.0 3.23 17.42    3    4</span></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50 32.4   4  78.7 4.08 19.47    4    1</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51 30.4   4  75.7 4.93 18.52    4    2</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52 33.9   4  71.1 4.22 19.90    4    1</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53 21.5   4 120.1 3.70 20.01    3    1</span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54 15.5   8 318.0 2.76 16.87    3    2</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55 15.2   8 304.0 3.15 17.30    3    2</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56 13.3   8 350.0 3.73 15.41    3    4</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57 19.2   8 400.0 3.08 17.05    3    2</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58 27.3   4  79.0 4.08 18.90    4    1</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59 26.0   4 120.3 4.43 16.70    5    2</span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60 30.4   4  95.1 3.77 16.90    5    2</span></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 61 15.8   8 351.0 4.22 14.50    5    4</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 62 19.7   6 145.0 3.62 15.50    5    6</span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 63 15.0   8 301.0 3.54 14.60    5    8</span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 64 21.4   4 121.0 4.11 18.60    4    2</span></span></code></pre></div>
+<p>The second <code>fuzzy_rbind()</code> call results in fewer bound
+columns because the user asked for a lower threshold.</p>
+<p>messy.cats also provides a function to help the user choose a string
+distance metric in order to get the best matches possible.
+<code>select_metric()</code> gives an approximate measure of “certainty”
+of matches for some of R’s string distance metrics on a given clean and
+messy vector pair.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select_metric</span>(<span class="fu">c</span>(<span class="st">&quot;axxxxx&quot;</span>, <span class="st">&quot;bxxxxx&quot;</span>, <span class="st">&quot;cxxxxx&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;apples&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;carrot&quot;</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;jw, p = 0.1&quot;</span></span></code></pre></div>
+<p>In the above example, <code>select_metric()</code> recommends the
+Jaro-Winkler distance with a p value of 0.1, since this metric weights
+agreement in the beginning of strings more heavily. The other metrics do
+not consider the position of discrepancies in strings, and as such are
+less “certain” of their matches given the nature of the example.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select_metric</span>(<span class="fu">c</span>(<span class="st">&quot;ipzza&quot;</span>, <span class="st">&quot;rgegplants&quot;</span>, <span class="st">&quot;vrem aof wheat&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;pizza&quot;</span>, <span class="st">&quot;eggplants&quot;</span>, <span class="st">&quot;cream of wheat&quot;</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;osa&quot;</span></span></code></pre></div>
+<p>This example recommends Optimal String Alignment distance, since this
+metric is more forgiving of adjacent character swaps. Notably,
+Jaro-Winkler with p of 0.1 is a particularly bad choice for this
+dataset, since all intended matches disagree on their first
+character.</p>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
